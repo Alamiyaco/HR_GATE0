@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>بوابة الموارد البشرية</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --primary-color:#2c3e50;
+      --secondary-color:#3498db;
+      --accent-color:#e67e22;
+      --dark-bg:#1a252f;
+      --light-bg:#f8f9fa;
+      --white:#ffffff;
+      --text-color:#333333;
+      --text-light:#666666;
+      --border-radius:12px;
+      --shadow:0 10px 30px rgba(0,0,0,0.08);
+      --transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    html[data-theme="dark"]{
+      --primary-color:#dfe6ee;
+      --secondary-color:#59aef7;
+      --accent-color:#f2a24a;
+      --dark-bg:#0f1720;
+      --light-bg:#0b1220;
+      --white:#0f1a26;
+      --text-color:#e9eef5;
+      --text-light:#b6c2d0;
+      --shadow:0 12px 30px rgba(0,0,0,0.35);
+    }
+
+    html,body,*,*::before,*::after,button,input,textarea,select{
+      font-family:'Cairo',sans-serif !important;
+    }
+
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      background-color:var(--light-bg);
+      color:var(--text-color);
+      line-height:1.7;
+    }
+
+    header{
+      background-color:rgba(255,255,255,0.95);
+      position:fixed;
+      width:100%;
+      top:0;
+      z-index:1000;
+    }
+
+    html[data-theme="dark"] header{
+      background-color:rgba(15,26,38,0.9);
+    }
+
+    .navbar{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      height:90px;
+      position:relative;
+    }
+
+    .theme-toggle{
+      position:absolute;
+      left:20px;
+      padding:8px 14px;
+      border-radius:20px;
+      border:1px solid rgba(0,0,0,0.1);
+      background:white;
+      cursor:pointer;
+      font-weight:800;
+      transition:0.3s;
+    }
+
+    html[data-theme="dark"] .theme-toggle{
+      background:#0f1a26;
+      border:1px solid rgba(255,255,255,0.1);
+      color:white;
+    }
+
+    .logo{
+      font-size:1.8rem;
+      font-weight:900;
+      color:var(--primary-color);
+    }
+
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="container navbar">
+    <button class="theme-toggle" id="themeToggle">🌙 ليلي</button>
+    <div class="logo">بوابة <span>الموارد البشرية</span></div>
+  </div>
+</header>
+
+<script>
+/* =========================
+   Dark Mode
+========================= */
+const toggleBtn = document.getElementById("themeToggle");
+
+function applyTheme(theme){
+  document.documentElement.setAttribute("data-theme", theme);
+  toggleBtn.textContent = theme === "dark" ? "☀️ نهاري" : "🌙 ليلي";
+}
+
+function initTheme(){
+  const saved = localStorage.getItem("theme");
+  if(saved){
+    applyTheme(saved);
+  }else{
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    applyTheme(prefersDark ? "dark" : "light");
+  }
+}
+
+toggleBtn.addEventListener("click", ()=>{
+  const current = document.documentElement.getAttribute("data-theme") === "dark";
+  const newTheme = current ? "light" : "dark";
+  localStorage.setItem("theme", newTheme);
+  applyTheme(newTheme);
+});
+
+initTheme();
+</script>
+
+</body>
+</html>
